@@ -16,7 +16,7 @@
     lidarr_api_key: "{{ lidarr_api_key }}"
     lidarr_url: "{{ lidarr_url }}"
   register: result
-- name: assert tag creation
+- name: assert tag idempotency
   assert:
     that:
       - result.changed == false

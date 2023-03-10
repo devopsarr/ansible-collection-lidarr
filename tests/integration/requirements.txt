@@ -1,1 +1,1 @@
-pyarr
+lidarr-py

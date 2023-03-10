@@ -1,7 +1,7 @@
 # Lidarr Collection for Ansible
 [![CI](https://github.com/devopsarr/ansible-collection-lidarr/workflows/CI/badge.svg?event=push)](https://github.com/devopsarr/ansible-collection-lidarr/actions) [![Codecov](https://img.shields.io/codecov/c/github/devopsarr/ansible-collection-lidarr)](https://codecov.io/gh/adevopsarr/ansible-collection-lidarr)
 
-Ansible colletion for Lidarr based on [pyarr SDK](https://github.com/totaldebug/pyarr)
+Ansible collection for Lidarr based on [lidarr-py SDK](https://github.com/devopsarr/lidarr-py)
 ## Code of Conduct
 
 We follow the [Ansible Code of Conduct](https://docs.ansible.com/ansible/devel/community/code_of_conduct.html) in all our interactions within this project.
