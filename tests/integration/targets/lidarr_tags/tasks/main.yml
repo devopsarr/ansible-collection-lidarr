@@ -1,0 +1,34 @@
+---
+- name: create tag
+  devopsarr.lidarr.lidarr_tag:
+    label: 'hello'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
+  register: result
+- name: assert tag creation
+  assert:
+    that:
+      - result['label'] == 'hello'
+# ----------------------------------------------------------------------------
+- name: create already present tag
+  devopsarr.lidarr.lidarr_tag:
+    label: 'hello'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
+  register: result
+- name: assert tag idempotency
+  assert:
+    that:
+      - result.changed == false
+# ----------------------------------------------------------------------------
+- name: delete tag
+  devopsarr.lidarr.lidarr_tag:
+    label: 'hello'
+    state: 'absent'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
+  register: result
+- name: assert tag deletion
+  assert:
+    that:
+      - result['id'] == 0
