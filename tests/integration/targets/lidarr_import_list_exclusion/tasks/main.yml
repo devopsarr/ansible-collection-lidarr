@@ -1,0 +1,37 @@
+---
+- name: create import list exclusion
+  devopsarr.lidarr.lidarr_import_list_exclusion:
+    foreign_id: 'b1a9c0e9-d987-4042-ae91-78d6a3267d69'
+    artist_name: 'test'
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  register: result
+- name: assert import list exclusion creation
+  assert:
+    that:
+      - result['foreign_id'] == "b1a9c0e9-d987-4042-ae91-78d6a3267d69"
+# ----------------------------------------------------------------------------
+- name: check idempotency
+  devopsarr.lidarr.lidarr_import_list_exclusion:
+    foreign_id: 'b1a9c0e9-d987-4042-ae91-78d6a3267d69'
+    artist_name: 'test'
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  register: result
+- name: assert import list exclusion idempotency
+  assert:
+    that:
+      - result.changed == false
+# ----------------------------------------------------------------------------
+- name: delete import list exclusion
+  devopsarr.lidarr.lidarr_import_list_exclusion:
+    foreign_id: 'b1a9c0e9-d987-4042-ae91-78d6a3267d69'
+    artist_name: 'test'
+    state: absent
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  register: result
+- name: assert import list exclusion deletion
+  assert:
+    that:
+      - result['id'] == 0

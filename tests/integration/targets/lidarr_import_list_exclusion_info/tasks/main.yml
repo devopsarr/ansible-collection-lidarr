@@ -1,0 +1,45 @@
+---
+- name: create remote path mapping
+  devopsarr.lidarr.lidarr_import_list_exclusion:
+    artist_name: 'test'
+    foreign_id: '{{ item }}'
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  register: import_list_exclusions
+  with_items:
+    - '810068af-2b3c-3e9c-b2ab-68a3f3e3787d'
+    - 'b1a9c0e9-d987-4042-ae91-78d6a3267d69'
+
+- name: list a single remote path mapping
+  devopsarr.lidarr.lidarr_import_list_exclusion_info:
+    foreign_id: '810068af-2b3c-3e9c-b2ab-68a3f3e3787d'
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  register: result
+
+- name: assert single remote path mapping
+  assert:
+    that:
+      - result['import_list_exclusions'][0]['artist_name'] == 'test'
+# ----------------------------------------------------------------------------
+- name: list all import list exclusion
+  devopsarr.lidarr.lidarr_import_list_exclusion_info:
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  register: result
+
+- name: assert multiple import list exclusion
+  assert:
+    that:
+      - result['import_list_exclusions'] | length > 1
+# ----------------------------------------------------------------------------
+- name: clean up remote path mapping
+  devopsarr.lidarr.lidarr_import_list_exclusion:
+    artist_name: 'test'
+    foreign_id: '{{ item }}'
+    state: absent
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  with_items:
+    - '810068af-2b3c-3e9c-b2ab-68a3f3e3787d'
+    - 'b1a9c0e9-d987-4042-ae91-78d6a3267d69'
