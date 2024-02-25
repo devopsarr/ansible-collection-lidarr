@@ -1,0 +1,23 @@
+---
+- name: list a single metadata schema
+  devopsarr.lidarr.lidarr_metadata_schema_info:
+    name: 'WdtvMetadata'
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  register: result
+
+- name: assert single metadata
+  assert:
+    that:
+      - result['metadatas'][0]['implementation'] == 'WdtvMetadata'
+# ----------------------------------------------------------------------------
+- name: list all metadata schemas
+  devopsarr.lidarr.lidarr_metadata_schema_info:
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  register: result
+
+- name: assert multiple metadata schemas
+  assert:
+    that:
+      - result['metadatas'] | length > 1
