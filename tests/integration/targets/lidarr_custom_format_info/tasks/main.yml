@@ -1,0 +1,52 @@
+---
+- name: create custom format
+  devopsarr.lidarr.lidarr_custom_format:
+    include_custom_format_when_renaming: false
+    name: '{{ item }}'
+    specifications:
+      - name: 'size'
+        implementation: 'SizeSpecification'
+        negate: false
+        required: true
+        fields:
+          - name: 'min'
+            value: 0
+          - name: 'max'
+            value: 10
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  with_items:
+    - 'info_test'
+    - 'info_test1'
+
+- name: list a single custom format
+  devopsarr.lidarr.lidarr_custom_format_info:
+    name: 'info_test'
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  register: result
+
+- name: assert single custom format
+  assert:
+    that:
+      - result['custom_formats'][0]['name'] == 'info_test'
+# ----------------------------------------------------------------------------
+- name: list all custom formats
+  devopsarr.lidarr.lidarr_custom_format_info:
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  register: result
+- name: assert multiple custom formats
+  assert:
+    that:
+      - result['custom_formats'] | length > 1
+# ----------------------------------------------------------------------------
+- name: clean up custom format
+  devopsarr.lidarr.lidarr_custom_format:
+    name: '{{ item }}'
+    state: absent
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  with_items:
+    - 'info_test'
+    - 'info_test1'

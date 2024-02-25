@@ -1,0 +1,23 @@
+---
+- name: list a single notification schema
+  devopsarr.lidarr.lidarr_notification_schema_info:
+    name: 'CustomScript'
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  register: result
+
+- name: assert single notification
+  assert:
+    that:
+      - result['notifications'][0]['implementation'] == 'CustomScript'
+# ----------------------------------------------------------------------------
+- name: list all notification schemas
+  devopsarr.lidarr.lidarr_notification_schema_info:
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  register: result
+
+- name: assert multiple notification schemas
+  assert:
+    that:
+      - result['notifications'] | length > 1

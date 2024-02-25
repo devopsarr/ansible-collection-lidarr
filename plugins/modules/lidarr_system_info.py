@@ -23,7 +23,7 @@ author:
 
 EXAMPLES = r'''
 # It will fetch the system info
-- name: Test with a message
+- name: Get system info
   devopsarr.lidarr.lidarr_system_info:
 '''
 
@@ -169,7 +169,6 @@ package_update_mechanism:
 from ansible_collections.devopsarr.lidarr.plugins.module_utils.lidarr_module import LidarrModule
 from ansible.module_utils.common.text.converters import to_native
 
-
 try:
     import lidarr
     HAS_LIDARR_LIBRARY = True
@@ -179,26 +178,32 @@ except ImportError:
 __metaclass__ = type
 
 
+def get_system_status(result):
+    try:
+        return client.get_system_status()
+    except Exception as e:
+        module.fail_json('Error retrieving system status: %s' % to_native(e.reason), **result)
+
+
 def run_module():
+    global client
+    global module
+
+    # Define available arguments/parameters a user can pass to the module
+    module = LidarrModule(
+        argument_spec={},
+        supports_check_mode=True,
+    )
+    # Init client and result.
+    client = lidarr.SystemApi(module.api)
     result = dict(
         changed=False,
     )
 
-    module = LidarrModule(
-        argument_spec={},
-        supports_check_mode=True
-    )
+    # Get resources.
+    result.update(get_system_status(result).model_dump(by_alias=False))
 
-    client = lidarr.SystemApi(module.api)
-
-    # Get the system status.
-    try:
-        response = client.get_system_status()
-    except Exception as e:
-        module.fail_json('Error retrieving system status: %s' % to_native(e.reason), **result)
-
-    result.update(response)
-
+    # Exit with data.
     module.exit_json(**result)
 
 

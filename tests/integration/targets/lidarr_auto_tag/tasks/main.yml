@@ -1,0 +1,90 @@
+---
+- name: create tag
+  devopsarr.lidarr.lidarr_tag:
+    label: 'autotagtest'
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  register: tag
+
+- name: create auto tag
+  devopsarr.lidarr.lidarr_auto_tag:
+    remove_tags_automatically: false
+    name: 'Type'
+    tags: ["{{ tag['id'] }}"]
+    specifications:
+      - name: 'rock'
+        implementation: 'GenreSpecification'
+        negate: true
+        required: false
+        fields:
+          - name: 'value'
+            value: ['rock']
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  register: result
+- name: assert auto tag creation
+  assert:
+    that:
+      - result['name'] == 'Type'
+# ----------------------------------------------------------------------------
+- name: edit already present auto tag
+  devopsarr.lidarr.lidarr_auto_tag:
+    remove_tags_automatically: false
+    name: 'Type'
+    tags: ["{{ tag['id'] }}"]
+    specifications:
+      - name: 'rock'
+        implementation: 'GenreSpecification'
+        negate: true
+        required: false
+        fields:
+          - name: 'value'
+            value: ['rock', 'folk']
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  register: result
+- name: assert auto tag changes
+  assert:
+    that:
+      - result.changed == true
+# ----------------------------------------------------------------------------
+- name: test idempotency
+  devopsarr.lidarr.lidarr_auto_tag:
+    remove_tags_automatically: false
+    name: 'Type'
+    tags: ["{{ tag['id'] }}"]
+    specifications:
+      - name: 'rock'
+        implementation: 'GenreSpecification'
+        negate: true
+        required: false
+        fields:
+          - name: 'value'
+            value: ['rock', 'folk']
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  register: result
+- name: assert auto tag idempotency
+  assert:
+    that:
+      - result.changed == false
+# ----------------------------------------------------------------------------
+- name: delete auto tag
+  devopsarr.lidarr.lidarr_auto_tag:
+    name: 'Type'
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+    state: 'absent'
+  register: result
+- name: assert auto tag deletion
+  assert:
+    that:
+      - result['id'] == 0
+
+- name: clean up tag
+  devopsarr.lidarr.lidarr_tag:
+    label: 'autotagtest'
+    state: 'absent'
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  register: result

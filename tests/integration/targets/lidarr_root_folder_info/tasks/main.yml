@@ -1,0 +1,52 @@
+---
+- name: create root folder
+  devopsarr.lidarr.lidarr_root_folder:
+    path: '{{ item }}'
+    new_item_monitor_option: 'all'
+    monitor_option: 'all'
+    metadata_profile_id: 1
+    quality_profile_id: 1
+    name: 'Abc'
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  with_items:
+    - '/tmp'
+    - '/config'
+
+- name: list a single root folder
+  devopsarr.lidarr.lidarr_root_folder_info:
+    path: '/tmp'
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  register: result
+
+- name: assert single root folder
+  assert:
+    that:
+      - result['root_folders'][0]['path'] == '/tmp'
+# ----------------------------------------------------------------------------
+- name: list all root folders
+  devopsarr.lidarr.lidarr_root_folder_info:
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  register: result
+
+- name: assert multiple root folders
+  assert:
+    that:
+      - result['root_folders'] | length > 1
+# ----------------------------------------------------------------------------
+- name: clean up root folder
+  devopsarr.lidarr.lidarr_root_folder:
+    path: '/tmp'
+    new_item_monitor_option: 'all'
+    monitor_option: 'all'
+    metadata_profile_id: 1
+    quality_profile_id: 1
+    name: 'Abc'
+    state: absent
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  with_items:
+    - '/tmp'
+    - '/config'

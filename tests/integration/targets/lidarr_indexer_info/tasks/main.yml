@@ -1,0 +1,56 @@
+---
+- name: create indexer
+  devopsarr.lidarr.lidarr_indexer:
+    name: '{{ item }}'
+    enable_automatic_search: false
+    enable_interactive_search: false
+    enable_rss: false
+    priority: 10
+    config_contract: 'NewznabSettings'
+    implementation: 'Newznab'
+    protocol: 'usenet'
+    fields:
+      - name: 'baseUrl'
+        value: 'https://lolo.sickbeard.com'
+      - name: 'apiPath'
+        value: '/api'
+      - name: 'categories'
+        value: [8000, 5000]
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  with_items:
+    - 'info_test'
+    - 'info_test1'
+
+- name: list a single indexer
+  devopsarr.lidarr.lidarr_indexer_info:
+    name: 'info_test'
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  register: result
+
+- name: assert single indexer
+  assert:
+    that:
+      - result['indexers'][0]['name'] == 'info_test'
+# ----------------------------------------------------------------------------
+- name: list all indexers
+  devopsarr.lidarr.lidarr_indexer_info:
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  register: result
+
+- name: assert multiple indexers
+  assert:
+    that:
+      - result['indexers'] | length > 1
+# ----------------------------------------------------------------------------
+- name: clean up indexer
+  devopsarr.lidarr.lidarr_indexer:
+    name: '{{ item }}'
+    state: absent
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  with_items:
+    - 'info_test'
+    - 'info_test1'

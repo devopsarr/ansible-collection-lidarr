@@ -1,0 +1,66 @@
+---
+- name: create root folder
+  devopsarr.lidarr.lidarr_root_folder:
+    path: '/tmp'
+    new_item_monitor_option: 'all'
+    monitor_option: 'all'
+    metadata_profile_id: 1
+    quality_profile_id: 1
+    name: 'Test'
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  register: result
+- name: assert root folder creation
+  assert:
+    that:
+      - result['path'] == '/tmp'
+# ----------------------------------------------------------------------------
+- name: edit root folder
+  devopsarr.lidarr.lidarr_root_folder:
+    path: '/tmp'
+    new_item_monitor_option: 'all'
+    monitor_option: 'existing'
+    metadata_profile_id: 1
+    quality_profile_id: 1
+    name: 'Test'
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  register: result
+- name: assert root folder idempotency
+  assert:
+    that:
+      - result.changed == true
+      - result.default_monitor_option == 'existing'
+# ----------------------------------------------------------------------------
+- name: test idempotency
+  devopsarr.lidarr.lidarr_root_folder:
+    path: '/tmp'
+    new_item_monitor_option: 'all'
+    monitor_option: 'existing'
+    metadata_profile_id: 1
+    quality_profile_id: 1
+    name: 'Test'
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  register: result
+- name: assert root folder idempotency
+  assert:
+    that:
+      - result.changed == false
+# ----------------------------------------------------------------------------
+- name: delete root folder
+  devopsarr.lidarr.lidarr_root_folder:
+    path: '/tmp'
+    new_item_monitor_option: 'all'
+    monitor_option: 'all'
+    metadata_profile_id: 1
+    quality_profile_id: 1
+    name: 'Test'
+    state: 'absent'
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  register: result
+- name: assert root folder deletion
+  assert:
+    that:
+      - result['id'] == 0

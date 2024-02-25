@@ -1,0 +1,63 @@
+---
+- name: create metadata
+  devopsarr.lidarr.lidarr_metadata:
+    name: 'Example'
+    config_contract: 'WdtvMetadataSettings'
+    implementation: 'WdtvMetadata'
+    enable: true
+    fields:
+      - name: 'trackMetadata'
+        value: true
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  register: result
+- name: assert metadata creation
+  assert:
+    that:
+      - result['implementation'] == 'WdtvMetadata'
+# ----------------------------------------------------------------------------
+- name: edit already present metadata
+  devopsarr.lidarr.lidarr_metadata:
+    name: 'Example'
+    config_contract: 'WdtvMetadataSettings'
+    implementation: 'WdtvMetadata'
+    enable: true
+    fields:
+      - name: 'trackMetadata'
+        value: false
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  register: result
+- name: assert metadata changes
+  assert:
+    that:
+      - result.changed == true
+# ----------------------------------------------------------------------------
+- name: test idempotency
+  devopsarr.lidarr.lidarr_metadata:
+    name: 'Example'
+    config_contract: 'WdtvMetadataSettings'
+    implementation: 'WdtvMetadata'
+    enable: true
+    fields:
+      - name: 'trackMetadata'
+        value: false
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  register: result
+- name: assert metadata idempotency
+  assert:
+    that:
+      - result.changed == false
+# ----------------------------------------------------------------------------
+- name: delete metadata
+  devopsarr.lidarr.lidarr_metadata:
+    name: 'Example'
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+    state: 'absent'
+  register: result
+- name: assert metadata deletion
+  assert:
+    that:
+      - result['id'] == 0
