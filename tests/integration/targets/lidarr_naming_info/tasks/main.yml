@@ -1,0 +1,10 @@
+---
+- name: get info
+  devopsarr.lidarr.lidarr_naming_info:
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  register: result
+- name: assert info population
+  assert:
+    that:
+      - result['id'] == 1
