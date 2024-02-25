@@ -1,0 +1,47 @@
+---
+- name: create notification
+  devopsarr.lidarr.lidarr_notification:
+    name: '{{ item }}'
+    config_contract: 'CustomScriptSettings'
+    implementation: 'CustomScript'
+    fields:
+      - name: 'path'
+        value: '/scripts/test.sh'
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  with_items:
+    - 'info_test'
+    - 'info_test1'
+
+- name: list a single notification
+  devopsarr.lidarr.lidarr_notification_info:
+    name: 'info_test'
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  register: result
+
+- name: assert single notification
+  assert:
+    that:
+      - result['notifications'][0]['name'] == 'info_test'
+# ----------------------------------------------------------------------------
+- name: list all notifications
+  devopsarr.lidarr.lidarr_notification_info:
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  register: result
+
+- name: assert multiple notifications
+  assert:
+    that:
+      - result['notifications'] | length > 1
+# ----------------------------------------------------------------------------
+- name: clean up notification
+  devopsarr.lidarr.lidarr_notification:
+    name: '{{ item }}'
+    state: absent
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  with_items:
+    - 'info_test'
+    - 'info_test1'
