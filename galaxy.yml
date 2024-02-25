@@ -1,18 +1,17 @@
 namespace: devopsarr
 name: lidarr
-# Version will be updated by workflow
-version: 0.0.1
+version: 0.0.1 # x-release-please-version
 readme: README.md
 authors:
   - Fuochi (github.com/Fuochi)
-description: "Ansible collection for Lidarr"
+description: 'Ansible collection for Lidarr'
 license_file: LICENSE
 tags:
   - lidarr
   - arr
   - music
 repository: https://github.com/devopsarr/ansible-collection-lidarr
-#documentation: https://github.com/ansible-collection-migration/devopsarr.lidarr/tree/main/docs
+documentation: https://devopsarr.github.io/ansible-doc/collections/devopsarr/lidarr/
 homepage: https://github.com/devopsarr/ansible-collection-lidarr
 issues: https://github.com/devopsarr/ansible-collection-lidarr/issues
 build_ignore:
