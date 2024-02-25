@@ -1,0 +1,23 @@
+---
+- name: list a single quality
+  devopsarr.lidarr.lidarr_quality_info:
+    name: 'FLAC'
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  register: result
+
+- name: assert single quality
+  assert:
+    that:
+      - result['qualities'][0]['quality']['name'] == 'FLAC'
+# ----------------------------------------------------------------------------
+- name: list all qualities
+  devopsarr.lidarr.lidarr_quality_info:
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  register: result
+
+- name: assert multiple qualities
+  assert:
+    that:
+      - result['qualities'] | length > 1

@@ -1,0 +1,124 @@
+---
+- name: create example custom format
+  devopsarr.lidarr.lidarr_custom_format:
+    name: 'Size'
+    include_custom_format_when_renaming: false
+    specifications:
+      - name: 'size'
+        implementation: 'SizeSpecification'
+        negate: false
+        required: true
+        fields:
+          - name: 'min'
+            value: 0
+          - name: 'max'
+            value: 10
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  register: format
+- name: create quality profile
+  devopsarr.lidarr.lidarr_quality_profile:
+    name: 'Example'
+    upgrade_allowed: true
+    cutoff: 1001
+    min_format_score: 0
+    cutoff_format_score: 0
+    quality_groups:
+      - qualities:
+          - id: 0
+            name: 'Unknown'
+      - name: 'low'
+        id: 1001
+        qualities:
+          - id: 32
+            name: 'MP3-8'
+          - id: 31
+            name: 'MP3-16'
+    formats: []
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  register: result
+- name: assert quality profile creation
+  assert:
+    that:
+      - result['cutoff'] == 1001
+# ----------------------------------------------------------------------------
+- name: edit already present quality profile
+  devopsarr.lidarr.lidarr_quality_profile:
+    name: 'Example'
+    upgrade_allowed: false
+    cutoff: 1001
+    min_format_score: 0
+    cutoff_format_score: 0
+    quality_groups:
+      - qualities:
+          - id: 0
+            name: 'Unknown'
+      - name: 'low'
+        id: 1001
+        qualities:
+          - id: 32
+            name: 'MP3-8'
+          - id: 31
+            name: 'MP3-16'
+    formats:
+      - name: "{{ format['name'] }}"
+        id: "{{ format['id'] }}"
+        score: 100
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  register: result
+- name: assert quality profile changes
+  assert:
+    that:
+      - result.changed == true
+      - result.upgrade_allowed == false
+# ----------------------------------------------------------------------------
+- name: test idempotency
+  devopsarr.lidarr.lidarr_quality_profile:
+    name: 'Example'
+    upgrade_allowed: false
+    cutoff: 1001
+    min_format_score: 0
+    cutoff_format_score: 0
+    quality_groups:
+      - qualities:
+          - id: 0
+            name: 'Unknown'
+      - name: 'low'
+        id: 1001
+        qualities:
+          - id: 32
+            name: 'MP3-8'
+          - id: 31
+            name: 'MP3-16'
+    formats:
+      - name: "{{ format['name'] }}"
+        id: "{{ format['id'] }}"
+        score: 100
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  register: result
+- name: assert quality profile idempotency
+  assert:
+    that:
+      - result.changed == false
+      - result.upgrade_allowed == false
+# ----------------------------------------------------------------------------
+- name: delete quality profile
+  devopsarr.lidarr.lidarr_quality_profile:
+    name: 'Example'
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+    state: 'absent'
+  register: result
+- name: assert quality profile deletion
+  assert:
+    that:
+      - result['id'] == 0
+- name: clean up custom format
+  devopsarr.lidarr.lidarr_custom_format:
+    name: 'Size'
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+    state: 'absent'
