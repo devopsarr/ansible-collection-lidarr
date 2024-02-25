@@ -1,0 +1,23 @@
+---
+- name: format a single custom format schema
+  devopsarr.lidarr.lidarr_custom_format_schema_info:
+    name: 'SizeSpecification'
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  register: result
+
+- name: assert single custom format schema
+  assert:
+    that:
+      - result['custom_formats'][0]['implementation'] == 'SizeSpecification'
+# ----------------------------------------------------------------------------
+- name: format all custom format schemas
+  devopsarr.lidarr.lidarr_custom_format_schema_info:
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  register: result
+
+- name: assert multiple custom format schemas
+  assert:
+    that:
+      - result['custom_formats'] | length > 1

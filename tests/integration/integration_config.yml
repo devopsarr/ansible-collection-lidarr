@@ -1,3 +1,2 @@
 ---
-lidarr_api_key: "b01df9fca2e64e459d64a09888ce7451"
-lidarr_url: "http://localhost:8686"
+lidarr_url: 'http://localhost:8686'
