@@ -1,0 +1,47 @@
+---
+- name: create release profile
+  devopsarr.lidarr.lidarr_release_profile:
+    enabled: true
+    required: ['{{ item }}']
+    ignored: []
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  with_items:
+    - 'info_test'
+    - 'info_test1'
+  register: init
+
+- name: list a single release profile
+  devopsarr.lidarr.lidarr_release_profile_info:
+    id: "{{init['results'][0]['id']}}"
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  register: result
+
+- name: assert single release profile
+  assert:
+    that:
+      - result['release_profiles'][0]['required'] == ['info_test']
+# ----------------------------------------------------------------------------
+- name: list all release profiles
+  devopsarr.lidarr.lidarr_release_profile_info:
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  register: result
+
+- name: assert multiple release profiles
+  assert:
+    that:
+      - result['release_profiles'] | length > 1
+# ----------------------------------------------------------------------------
+- name: clean up release profile
+  devopsarr.lidarr.lidarr_release_profile:
+    enabled: true
+    required: ['{{ item }}']
+    ignored: []
+    state: absent
+    lidarr_api_key: '{{ lidarr_api_key }}'
+    lidarr_url: '{{ lidarr_url }}'
+  with_items:
+    - 'info_test'
+    - 'info_test1'
