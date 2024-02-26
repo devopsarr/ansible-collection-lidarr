@@ -42,6 +42,11 @@ auto_redownload_failed:
     returned: always
     type: bool
     sample: true
+auto_redownload_failed_from_interactive_search:
+    description: Auto redownload failed from interactive search.
+    returned: always
+    type: bool
+    sample: true
 enable_completed_download_handling:
     description: Enable completed download handling.
     returned: always

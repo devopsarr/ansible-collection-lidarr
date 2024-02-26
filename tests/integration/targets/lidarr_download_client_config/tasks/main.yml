@@ -3,6 +3,7 @@
 - name: edit download_client_config
   devopsarr.lidarr.lidarr_download_client_config:
     auto_redownload_failed: false
+    auto_redownload_failed_from_interactive_search: false
     enable_completed_download_handling: true
     lidarr_api_key: '{{ lidarr_api_key }}'
     lidarr_url: '{{ lidarr_url }}'
@@ -18,6 +19,7 @@
 - name: test idempotency
   devopsarr.lidarr.lidarr_download_client_config:
     auto_redownload_failed: false
+    auto_redownload_failed_from_interactive_search: false
     enable_completed_download_handling: true
     lidarr_api_key: '{{ lidarr_api_key }}'
     lidarr_url: '{{ lidarr_url }}'
