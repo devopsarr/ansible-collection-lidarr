@@ -21,6 +21,10 @@ options:
         description: Auto redownload failed.
         required: true
         type: bool
+    auto_redownload_failed_from_interactive_search:
+        description: Auto redownload failed from interactive search.
+        required: true
+        type: bool
     enable_completed_download_handling:
         description: Enable completed download handling.
         required: true
@@ -39,6 +43,7 @@ EXAMPLES = r'''
 - name: Update download client config
   devopsarr.lidarr.lidarr_download_client_config:
     auto_redownload_failed: false
+    auto_redownload_failed_from_interactive_search: false
     enable_completed_download_handling: true
 '''
 
@@ -51,6 +56,11 @@ id:
     sample: '1'
 auto_redownload_failed:
     description: Auto redownload failed.
+    returned: always
+    type: bool
+    sample: true
+auto_redownload_failed_from_interactive_search:
+    description: Auto redownload failed from interactive search.
     returned: always
     type: bool
     sample: true
@@ -80,6 +90,7 @@ def init_module_args():
     # define available arguments/parameters a user can pass to the module
     return dict(
         enable_completed_download_handling=dict(type='bool', required=True),
+        auto_redownload_failed_from_interactive_search=dict(type='bool', required=True),
         auto_redownload_failed=dict(type='bool', required=True),
     )
 
@@ -128,6 +139,7 @@ def run_module():
     want = lidarr.DownloadClientConfigResource(
         enable_completed_download_handling=module.params['enable_completed_download_handling'],
         auto_redownload_failed=module.params['auto_redownload_failed'],
+        auto_redownload_failed_from_interactive_search=module.params['auto_redownload_failed_from_interactive_search'],
         download_client_working_folders='_UNPACK_|_FAILED_',
         id=1,
     )
