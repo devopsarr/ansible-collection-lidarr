@@ -1,1 +1,143 @@
-releases: {}
+ancestor: null
+releases:
+  1.0.0:
+    modules:
+    - description: Manages lidarr Artist.
+      name: lidarr_artist
+      namespace: ''
+    - description: Get information about Lidarr artist.
+      name: lidarr_artist_info
+      namespace: ''
+    - description: Manages Lidarr auto tag.
+      name: lidarr_auto_tag
+      namespace: ''
+    - description: Get information about Lidarr auto tag.
+      name: lidarr_auto_tag_info
+      namespace: ''
+    - description: Get information about Lidarr auto tag schema.
+      name: lidarr_auto_tag_schema_info
+      namespace: ''
+    - description: Manages Lidarr custom format.
+      name: lidarr_custom_format
+      namespace: ''
+    - description: Get information about Lidarr custom format.
+      name: lidarr_custom_format_info
+      namespace: ''
+    - description: Get information about Lidarr custom format schema.
+      name: lidarr_custom_format_schema_info
+      namespace: ''
+    - description: Manages Lidarr delay profile.
+      name: lidarr_delay_profile
+      namespace: ''
+    - description: Get information about Lidarr delay profile.
+      name: lidarr_delay_profile_info
+      namespace: ''
+    - description: Manages Lidarr download client.
+      name: lidarr_download_client
+      namespace: ''
+    - description: Manages Lidarr download client config.
+      name: lidarr_download_client_config
+      namespace: ''
+    - description: Get information about Lidarr download client config.
+      name: lidarr_download_client_config_info
+      namespace: ''
+    - description: Get information about Lidarr download client.
+      name: lidarr_download_client_info
+      namespace: ''
+    - description: Get information about Lidarr download client schema.
+      name: lidarr_download_client_schema_info
+      namespace: ''
+    - description: Manages Lidarr import list.
+      name: lidarr_import_list
+      namespace: ''
+    - description: Manages Lidarr import list exclusion.
+      name: lidarr_import_list_exclusion
+      namespace: ''
+    - description: Manages Lidarr import list exclusion.
+      name: lidarr_import_list_exclusion_info
+      namespace: ''
+    - description: Get information about Lidarr import list.
+      name: lidarr_import_list_info
+      namespace: ''
+    - description: Get information about Lidarr import list schema.
+      name: lidarr_import_list_schema_info
+      namespace: ''
+    - description: Manages Lidarr indexer.
+      name: lidarr_indexer
+      namespace: ''
+    - description: Manages Lidarr indexer config.
+      name: lidarr_indexer_config
+      namespace: ''
+    - description: Get information about Lidarr indexer config.
+      name: lidarr_indexer_config_info
+      namespace: ''
+    - description: Get information about Lidarr indexer.
+      name: lidarr_indexer_info
+      namespace: ''
+    - description: Get information about Lidarr indexer schema.
+      name: lidarr_indexer_schema_info
+      namespace: ''
+    - description: Manages Lidarr media management.
+      name: lidarr_media_management
+      namespace: ''
+    - description: Get information about Lidarr media management.
+      name: lidarr_media_management_info
+      namespace: ''
+    - description: Manages Lidarr metadata.
+      name: lidarr_metadata
+      namespace: ''
+    - description: Get information about Lidarr metadata.
+      name: lidarr_metadata_info
+      namespace: ''
+    - description: Get information about Lidarr metadata schema.
+      name: lidarr_metadata_schema_info
+      namespace: ''
+    - description: Manages Lidarr naming.
+      name: lidarr_naming
+      namespace: ''
+    - description: Get information about Lidarr naming.
+      name: lidarr_naming_info
+      namespace: ''
+    - description: Manages Lidarr notification.
+      name: lidarr_notification
+      namespace: ''
+    - description: Get information about Lidarr notification.
+      name: lidarr_notification_info
+      namespace: ''
+    - description: Get information about Lidarr notification schema.
+      name: lidarr_notification_schema_info
+      namespace: ''
+    - description: Manages Lidarr quality.
+      name: lidarr_quality
+      namespace: ''
+    - description: Get information about Lidarr quality.
+      name: lidarr_quality_info
+      namespace: ''
+    - description: Manages Lidarr quality profile.
+      name: lidarr_quality_profile
+      namespace: ''
+    - description: Get information about Lidarr quality profile.
+      name: lidarr_quality_profile_info
+      namespace: ''
+    - description: Manages Lidarr release profile.
+      name: lidarr_release_profile
+      namespace: ''
+    - description: Get information about Lidarr release profile.
+      name: lidarr_release_profile_info
+      namespace: ''
+    - description: Manages Lidarr remote path mapping.
+      name: lidarr_remote_path_mapping
+      namespace: ''
+    - description: Get information about Lidarr remote path mapping.
+      name: lidarr_remote_path_mapping_info
+      namespace: ''
+    - description: Manages Lidarr root folder.
+      name: lidarr_root_folder
+      namespace: ''
+    - description: Get information about Lidarr root folder.
+      name: lidarr_root_folder_info
+      namespace: ''
+    - description: Get information about Lidarr tag.
+      name: lidarr_tag_info
+      namespace: ''
+    release_date: '2024-02-26'
