@@ -1,41 +1,41 @@
 ---
-- name: create release profile
+- name: Create release profile
   devopsarr.lidarr.lidarr_release_profile:
     enabled: true
-    required: ['proper']
-    ignored: ['repack', 'dvdrip']
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    required: [proper]
+    ignored: [repack, dvdrip]
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
-- name: assert release profile changes
-  assert:
+- name: Assert release profile changes
+  ansible.builtin.assert:
     that:
       - result.ignored == ["repack", "dvdrip"]
 # ----------------------------------------------------------------------------
-- name: create already present release profile
+- name: Create already present release profile
   devopsarr.lidarr.lidarr_release_profile:
     enabled: true
-    required: ['proper']
-    ignored: ['repack', 'dvdrip']
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    required: [proper]
+    ignored: [repack, dvdrip]
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
-- name: assert release profile idempotency
-  assert:
+- name: Assert release profile idempotency
+  ansible.builtin.assert:
     that:
       - result.changed == false
       - result.ignored == ["repack", "dvdrip"]
 # ----------------------------------------------------------------------------
-- name: delete release profile
+- name: Delete release profile
   devopsarr.lidarr.lidarr_release_profile:
     enabled: true
-    required: ['proper']
-    ignored: ['repack', 'dvdrip']
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
-    state: 'absent'
+    required: [proper]
+    ignored: [repack, dvdrip]
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
+    state: absent
   register: result
-- name: assert release profile deletion
-  assert:
+- name: Assert release profile deletion
+  ansible.builtin.assert:
     that:
       - result['id'] == 0

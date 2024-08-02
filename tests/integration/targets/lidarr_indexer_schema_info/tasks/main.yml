@@ -1,23 +1,23 @@
 ---
-- name: list a single indexer schema
+- name: List a single indexer schema
   devopsarr.lidarr.lidarr_indexer_schema_info:
-    name: 'Newznab'
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    name: Newznab
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
 
-- name: assert single indexer
-  assert:
+- name: Assert single indexer
+  ansible.builtin.assert:
     that:
       - result['indexers'][0]['implementation'] == 'Newznab'
 # ----------------------------------------------------------------------------
-- name: list all indexer schemas
+- name: List all indexer schemas
   devopsarr.lidarr.lidarr_indexer_schema_info:
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
 
-- name: assert multiple indexer schemas
-  assert:
+- name: Assert multiple indexer schemas
+  ansible.builtin.assert:
     that:
       - result['indexers'] | length > 1

@@ -96,7 +96,7 @@ def create_import_list_exclusion(want, result):
         try:
             response = client.create_import_list_exclusion(import_list_exclusion_resource=want)
         except lidarr.ApiException as e:
-            module.fail_json('Error creating import list exclusion: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+            module.fail_json('Error creating import list exclusion: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
         except Exception as e:
             module.fail_json('Error creating import list exclusion: {}'.format(to_native(e)), **result)
         result.update(response.model_dump(by_alias=False))
@@ -107,7 +107,7 @@ def list_import_list_exclusions(result):
     try:
         return client.list_import_list_exclusion()
     except lidarr.ApiException as e:
-        module.fail_json('Error listing import list exclusions: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+        module.fail_json('Error listing import list exclusions: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
     except Exception as e:
         module.fail_json('Error listing import list exclusions: {}'.format(to_native(e)), **result)
 
@@ -127,7 +127,7 @@ def delete_import_list_exclusion(result):
             try:
                 client.delete_import_list_exclusion(result['id'])
             except lidarr.ApiException as e:
-                module.fail_json('Error deleting import list exclusion: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+                module.fail_json('Error deleting import list exclusion: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
             except Exception as e:
                 module.fail_json('Error deleting import list exclusion: {}'.format(to_native(e)), **result)
             result['id'] = 0

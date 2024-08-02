@@ -91,7 +91,7 @@ def list_import_list_exclusion(result):
     try:
         return client.list_import_list_exclusion()
     except lidarr.ApiException as e:
-        module.fail_json('Error listing import list exclusions: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+        module.fail_json('Error listing import list exclusions: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
     except Exception as e:
         module.fail_json('Error listing import list exclusions: {}'.format(to_native(e)), **result)
 

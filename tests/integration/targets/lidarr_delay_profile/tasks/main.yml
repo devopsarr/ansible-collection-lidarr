@@ -1,11 +1,11 @@
 ---
-- name: create tag for delay profile
+- name: Create tag for delay profile
   devopsarr.lidarr.lidarr_tag:
-    label: 'delay_profile_test'
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    label: delay_profile_test
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: tag
-- name: create delay profile
+- name: Create delay profile
   devopsarr.lidarr.lidarr_delay_profile:
     preferred_protocol: torrent
     usenet_delay: 0
@@ -15,16 +15,16 @@
     enable_torrent: true
     bypass_if_above_custom_format_score: true
     bypass_if_highest_quality: false
-    tags: ['{{ tag.id }}']
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    tags: ["{{ tag.id }}"]
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
-- name: assert delay profile creation
-  assert:
+- name: Assert delay profile creation
+  ansible.builtin.assert:
     that:
       - result['preferred_protocol'] == 'torrent'
 # ----------------------------------------------------------------------------
-- name: edit already present delay profile
+- name: Edit already present delay profile
   devopsarr.lidarr.lidarr_delay_profile:
     preferred_protocol: torrent
     usenet_delay: 10
@@ -34,17 +34,17 @@
     enable_torrent: true
     bypass_if_above_custom_format_score: true
     bypass_if_highest_quality: false
-    tags: ['{{ tag.id }}']
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    tags: ["{{ tag.id }}"]
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
-- name: assert delay profile changes
-  assert:
+- name: Assert delay profile changes
+  ansible.builtin.assert:
     that:
       - result.changed == true
       - result.usenet_delay == 10
 # ----------------------------------------------------------------------------
-- name: test idempotency
+- name: Test idempotency
   devopsarr.lidarr.lidarr_delay_profile:
     preferred_protocol: torrent
     usenet_delay: 10
@@ -54,24 +54,24 @@
     enable_torrent: true
     bypass_if_above_custom_format_score: true
     bypass_if_highest_quality: false
-    tags: ['{{ tag.id }}']
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    tags: ["{{ tag.id }}"]
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
-- name: assert delay profile idempotency
-  assert:
+- name: Assert delay profile idempotency
+  ansible.builtin.assert:
     that:
       - result.changed == false
       - result.usenet_delay == 10
 # ----------------------------------------------------------------------------
-- name: delete delay profile
+- name: Delete delay profile
   devopsarr.lidarr.lidarr_delay_profile:
-    tags: ['{{ tag.id }}']
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
-    state: 'absent'
+    tags: ["{{ tag.id }}"]
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
+    state: absent
   register: result
-- name: assert delay profile deletion
-  assert:
+- name: Assert delay profile deletion
+  ansible.builtin.assert:
     that:
       - result['id'] == 0

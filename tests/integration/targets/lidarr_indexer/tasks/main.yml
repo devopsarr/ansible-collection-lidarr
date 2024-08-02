@@ -1,176 +1,176 @@
 ---
-- name: create indexer
+- name: Create indexer
   devopsarr.lidarr.lidarr_indexer:
-    name: 'Example'
+    name: Example
     enable_automatic_search: false
     enable_interactive_search: false
     enable_rss: false
     priority: 10
-    config_contract: 'NewznabSettings'
-    implementation: 'Newznab'
-    protocol: 'usenet'
+    config_contract: NewznabSettings
+    implementation: Newznab
+    protocol: usenet
     fields:
-      - name: 'baseUrl'
-        value: 'https://lolo.sickbeard.com'
-      - name: 'apiPath'
-        value: '/api'
-      - name: 'categories'
+      - name: baseUrl
+        value: https://lolo.sickbeard.com
+      - name: apiPath
+        value: /api
+      - name: categories
         value: [8000, 5000]
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
-- name: assert indexer creation
-  assert:
+- name: Assert indexer creation
+  ansible.builtin.assert:
     that:
       - result['implementation'] == 'Newznab'
 # ----------------------------------------------------------------------------
-- name: edit already present indexer
+- name: Edit already present indexer
   devopsarr.lidarr.lidarr_indexer:
-    name: 'Example'
+    name: Example
     enable_automatic_search: false
     enable_interactive_search: false
     enable_rss: false
     priority: 10
-    config_contract: 'NewznabSettings'
-    implementation: 'Newznab'
-    protocol: 'usenet'
+    config_contract: NewznabSettings
+    implementation: Newznab
+    protocol: usenet
     fields:
-      - name: 'baseUrl'
-        value: 'https://lolo.sickbeard.com'
-      - name: 'apiPath'
-        value: '/api'
-      - name: 'categories'
+      - name: baseUrl
+        value: https://lolo.sickbeard.com
+      - name: apiPath
+        value: /api
+      - name: categories
         value: [8000, 3000]
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
-- name: assert indexer changes
-  assert:
+- name: Assert indexer changes
+  ansible.builtin.assert:
     that:
       - result.changed == true
 # ----------------------------------------------------------------------------
-- name: test idempotency
+- name: Test idempotency
   devopsarr.lidarr.lidarr_indexer:
-    name: 'Example'
+    name: Example
     enable_automatic_search: false
     enable_interactive_search: false
     enable_rss: false
     priority: 10
-    config_contract: 'NewznabSettings'
-    implementation: 'Newznab'
-    protocol: 'usenet'
+    config_contract: NewznabSettings
+    implementation: Newznab
+    protocol: usenet
     fields:
-      - name: 'baseUrl'
-        value: 'https://lolo.sickbeard.com'
-      - name: 'apiPath'
-        value: '/api'
-      - name: 'categories'
+      - name: baseUrl
+        value: https://lolo.sickbeard.com
+      - name: apiPath
+        value: /api
+      - name: categories
         value: [8000, 3000]
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
-- name: assert indexer idempotency
-  assert:
+- name: Assert indexer idempotency
+  ansible.builtin.assert:
     that:
       - result.changed == false
 # ----------------------------------------------------------------------------
-- name: delete indexer
+- name: Delete indexer
   devopsarr.lidarr.lidarr_indexer:
-    name: 'Example'
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
-    state: 'absent'
+    name: Example
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
+    state: absent
   register: result
-- name: assert indexer deletion
-  assert:
+- name: Assert indexer deletion
+  ansible.builtin.assert:
     that:
       - result['id'] == 0
 # ----------------------------------------------------------------------------
-- name: create another indexer with sensitive values
+- name: Create another indexer with sensitive values
   devopsarr.lidarr.lidarr_indexer:
-    name: 'Example'
+    name: Example
     enable_automatic_search: false
     enable_interactive_search: false
     enable_rss: false
     priority: 10
-    config_contract: 'FileListSettings'
-    implementation: 'FileList'
-    protocol: 'torrent'
+    config_contract: FileListSettings
+    implementation: FileList
+    protocol: torrent
     fields:
-      - name: 'baseUrl'
-        value: 'https://filelist.io'
-      - name: 'username'
-        value: 'test'
-      - name: 'passKey'
-        value: 'test'
-      - name: 'minimumSeeders'
+      - name: baseUrl
+        value: https://filelist.io
+      - name: username
+        value: test
+      - name: passKey
+        value: test
+      - name: minimumSeeders
         value: 0
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
-- name: assert indexer creation
-  assert:
+- name: Assert indexer creation
+  ansible.builtin.assert:
     that:
       - result['implementation'] == 'FileList'
 # ----------------------------------------------------------------------------
-- name: test idempotency
+- name: Test idempotency
   devopsarr.lidarr.lidarr_indexer:
-    name: 'Example'
+    name: Example
     enable_automatic_search: false
     enable_interactive_search: false
     enable_rss: false
     priority: 10
-    config_contract: 'FileListSettings'
-    implementation: 'FileList'
-    protocol: 'torrent'
+    config_contract: FileListSettings
+    implementation: FileList
+    protocol: torrent
     fields:
-      - name: 'baseUrl'
-        value: 'https://filelist.io'
-      - name: 'username'
-        value: 'test'
-      - name: 'passKey'
-        value: 'test1'
-      - name: 'minimumSeeders'
+      - name: baseUrl
+        value: https://filelist.io
+      - name: username
+        value: test
+      - name: passKey
+        value: test1
+      - name: minimumSeeders
         value: 0
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
-- name: assert indexer idempotency
-  assert:
+- name: Assert indexer idempotency
+  ansible.builtin.assert:
     that:
       - result.changed == false
 # ----------------------------------------------------------------------------
-- name: test key change
+- name: Test key change
   devopsarr.lidarr.lidarr_indexer:
-    name: 'Example'
+    name: Example
     enable_automatic_search: false
     enable_interactive_search: false
     enable_rss: false
     priority: 10
-    config_contract: 'FileListSettings'
-    implementation: 'FileList'
-    protocol: 'torrent'
+    config_contract: FileListSettings
+    implementation: FileList
+    protocol: torrent
     fields:
-      - name: 'baseUrl'
-        value: 'https://filelist.io'
-      - name: 'username'
-        value: 'test'
-      - name: 'passKey'
-        value: 'test1'
-      - name: 'minimumSeeders'
+      - name: baseUrl
+        value: https://filelist.io
+      - name: username
+        value: test
+      - name: passKey
+        value: test1
+      - name: minimumSeeders
         value: 0
     update_secrets: true
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
-- name: assert indexer idempotency
-  assert:
+- name: Assert indexer idempotency
+  ansible.builtin.assert:
     that:
       - result.changed == true
 # ----------------------------------------------------------------------------
-- name: clean up
+- name: Clean up
   devopsarr.lidarr.lidarr_indexer:
-    name: 'Example'
+    name: Example
     state: absent
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"

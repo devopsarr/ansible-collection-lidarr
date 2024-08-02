@@ -202,7 +202,7 @@ def list_quality_profiles(result):
     try:
         return client.list_quality_profile()
     except lidarr.ApiException as e:
-        module.fail_json('Error listing quality profiles: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+        module.fail_json('Error listing quality profiles: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
     except Exception as e:
         module.fail_json('Error listing quality profiles: {}'.format(to_native(e)), **result)
 
@@ -221,7 +221,7 @@ def update_quality_profile(want, result):
         try:
             response = client.update_quality_profile(quality_profile_resource=want, id=str(want.id))
         except lidarr.ApiException as e:
-            module.fail_json('Error updating quality profile: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+            module.fail_json('Error updating quality profile: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
         except Exception as e:
             module.fail_json('Error updating quality profile: {}'.format(to_native(e)), **result)
     # No need to exit module since it will exit by default either way
@@ -235,7 +235,7 @@ def delete_quality_profile(result):
             try:
                 client.delete_quality_profile(result['id'])
             except lidarr.ApiException as e:
-                module.fail_json('Error deleting quality profile: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+                module.fail_json('Error deleting quality profile: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
             except Exception as e:
                 module.fail_json('Error deleting quality profile: {}'.format(to_native(e)), **result)
             result['id'] = 0
@@ -249,7 +249,7 @@ def populate_quality_groups(result):
     try:
         all_qualities = temp_client.list_quality_definition()
     except lidarr.ApiException as e:
-        module.fail_json('Error listing qualities: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+        module.fail_json('Error listing qualities: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
     except Exception as e:
         module.fail_json('Error listing qualities: {}'.format(to_native(e)), **result)
 
@@ -322,7 +322,7 @@ def populate_formats(result):
     try:
         all_formats = temp_client.list_custom_format()
     except lidarr.ApiException as e:
-        module.fail_json('Error listing formats: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+        module.fail_json('Error listing formats: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
     except Exception as e:
         module.fail_json('Error listing formats: {}'.format(to_native(e)), **result)
 

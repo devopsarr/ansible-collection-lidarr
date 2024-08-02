@@ -275,7 +275,7 @@ def create_notification(want, result):
         try:
             response = client.create_notification(notification_resource=want)
         except lidarr.ApiException as e:
-            module.fail_json('Error creating notification: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+            module.fail_json('Error creating notification: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
         except Exception as e:
             module.fail_json('Error creating notification: {}'.format(to_native(e)), **result)
         result.update(response.model_dump(by_alias=False))
@@ -286,7 +286,7 @@ def list_notifications(result):
     try:
         return client.list_notification()
     except lidarr.ApiException as e:
-        module.fail_json('Error listing notifications: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+        module.fail_json('Error listing notifications: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
     except Exception as e:
         module.fail_json('Error listing notifications: {}'.format(to_native(e)), **result)
 
@@ -305,7 +305,7 @@ def update_notification(want, result):
         try:
             response = client.update_notification(notification_resource=want, id=str(want.id))
         except lidarr.ApiException as e:
-            module.fail_json('Error updating notification: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+            module.fail_json('Error updating notification: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
         except Exception as e:
             module.fail_json('Error updating notification: {}'.format(to_native(e)), **result)
     # No need to exit module since it will exit by default either way
@@ -319,7 +319,7 @@ def delete_notification(result):
             try:
                 client.delete_notification(result['id'])
             except lidarr.ApiException as e:
-                module.fail_json('Error deleting notification: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+                module.fail_json('Error deleting notification: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
             except Exception as e:
                 module.fail_json('Error deleting notification: {}'.format(to_native(e)), **result)
             result['id'] = 0

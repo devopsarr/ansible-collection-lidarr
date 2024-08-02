@@ -126,7 +126,7 @@ def list_download_client_schema(result):
     try:
         return client.list_download_client_schema()
     except lidarr.ApiException as e:
-        module.fail_json('Error listing download client schemas: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+        module.fail_json('Error listing download client schemas: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
     except Exception as e:
         module.fail_json('Error listing download client schemas: {}'.format(to_native(e)), **result)
 

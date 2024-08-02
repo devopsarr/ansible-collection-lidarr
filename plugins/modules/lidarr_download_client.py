@@ -204,7 +204,7 @@ def create_download_client(want, result):
         try:
             response = client.create_download_client(download_client_resource=want)
         except lidarr.ApiException as e:
-            module.fail_json('Error creating download client: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+            module.fail_json('Error creating download client: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
         except Exception as e:
             module.fail_json('Error creating download client: {}'.format(to_native(e)), **result)
         result.update(response.model_dump(by_alias=False))
@@ -215,7 +215,7 @@ def list_download_clients(result):
     try:
         return client.list_download_client()
     except lidarr.ApiException as e:
-        module.fail_json('Error listing download clients: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+        module.fail_json('Error listing download clients: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
     except Exception as e:
         module.fail_json('Error listing download clients: {}'.format(to_native(e)), **result)
 
@@ -234,7 +234,7 @@ def update_download_client(want, result):
         try:
             response = client.update_download_client(download_client_resource=want, id=str(want.id))
         except lidarr.ApiException as e:
-            module.fail_json('Error updating download client: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+            module.fail_json('Error updating download client: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
         except Exception as e:
             module.fail_json('Error updating download client: {}'.format(to_native(e)), **result)
     # No need to exit module since it will exit by default either way
@@ -248,7 +248,7 @@ def delete_download_client(result):
             try:
                 client.delete_download_client(result['id'])
             except lidarr.ApiException as e:
-                module.fail_json('Error deleting download client: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+                module.fail_json('Error deleting download client: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
             except Exception as e:
                 module.fail_json('Error deleting download client: {}'.format(to_native(e)), **result)
             result['id'] = 0

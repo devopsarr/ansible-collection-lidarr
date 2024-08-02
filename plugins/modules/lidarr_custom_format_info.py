@@ -90,7 +90,7 @@ def list_custom_formats(result):
     try:
         return client.list_custom_format()
     except lidarr.ApiException as e:
-        module.fail_json('Error listing custom formats: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+        module.fail_json('Error listing custom formats: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
     except Exception as e:
         module.fail_json('Error listing custom formats: {}'.format(to_native(e)), **result)
 

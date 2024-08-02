@@ -217,7 +217,7 @@ def list_indexers(result):
     try:
         return client.list_indexer()
     except lidarr.ApiException as e:
-        module.fail_json('Error listing indexers: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+        module.fail_json('Error listing indexers: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
     except Exception as e:
         module.fail_json('Error listing indexers: {}'.format(to_native(e)), **result)
 
@@ -236,7 +236,7 @@ def update_indexer(want, result):
         try:
             response = client.update_indexer(indexer_resource=want, id=str(want.id))
         except lidarr.ApiException as e:
-            module.fail_json('Error updating indexer: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+            module.fail_json('Error updating indexer: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
         except Exception as e:
             module.fail_json('Error updating indexer: {}'.format(to_native(e)), **result)
     # No need to exit module since it will exit by default either way
@@ -250,7 +250,7 @@ def delete_indexer(result):
             try:
                 client.delete_indexer(result['id'])
             except lidarr.ApiException as e:
-                module.fail_json('Error deleting indexer: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+                module.fail_json('Error deleting indexer: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
             except Exception as e:
                 module.fail_json('Error deleting indexer: {}'.format(to_native(e)), **result)
             result['id'] = 0

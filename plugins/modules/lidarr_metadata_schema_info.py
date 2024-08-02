@@ -106,7 +106,7 @@ def list_metadata_schema(result):
     try:
         return client.list_metadata_schema()
     except lidarr.ApiException as e:
-        module.fail_json('Error listing metadata schemas: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+        module.fail_json('Error listing metadata schemas: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
     except Exception as e:
         module.fail_json('Error listing metadata schemas: {}'.format(to_native(e)), **result)
 

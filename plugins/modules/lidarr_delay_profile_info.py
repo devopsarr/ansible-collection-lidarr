@@ -127,7 +127,7 @@ def list_delay_profile(result):
     try:
         return client.list_delay_profile()
     except lidarr.ApiException as e:
-        module.fail_json('Error listing delay profiles: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+        module.fail_json('Error listing delay profiles: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
     except Exception as e:
         module.fail_json('Error listing delay profiles: {}'.format(to_native(e)), **result)
 

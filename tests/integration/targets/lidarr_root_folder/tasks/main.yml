@@ -1,66 +1,66 @@
 ---
-- name: create root folder
+- name: Create root folder
   devopsarr.lidarr.lidarr_root_folder:
-    path: '/tmp'
-    new_item_monitor_option: 'all'
-    monitor_option: 'all'
+    path: /tmp
+    new_item_monitor_option: all
+    monitor_option: all
     metadata_profile_id: 1
     quality_profile_id: 1
-    name: 'Test'
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    name: Test
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
-- name: assert root folder creation
-  assert:
+- name: Assert root folder creation
+  ansible.builtin.assert:
     that:
       - result['path'] == '/tmp'
 # ----------------------------------------------------------------------------
-- name: edit root folder
+- name: Edit root folder
   devopsarr.lidarr.lidarr_root_folder:
-    path: '/tmp'
-    new_item_monitor_option: 'all'
-    monitor_option: 'existing'
+    path: /tmp
+    new_item_monitor_option: all
+    monitor_option: existing
     metadata_profile_id: 1
     quality_profile_id: 1
-    name: 'Test'
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    name: Test
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
-- name: assert root folder idempotency
-  assert:
+- name: Assert root folder idempotency
+  ansible.builtin.assert:
     that:
       - result.changed == true
       - result.default_monitor_option == 'existing'
 # ----------------------------------------------------------------------------
-- name: test idempotency
+- name: Test idempotency
   devopsarr.lidarr.lidarr_root_folder:
-    path: '/tmp'
-    new_item_monitor_option: 'all'
-    monitor_option: 'existing'
+    path: /tmp
+    new_item_monitor_option: all
+    monitor_option: existing
     metadata_profile_id: 1
     quality_profile_id: 1
-    name: 'Test'
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    name: Test
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
-- name: assert root folder idempotency
-  assert:
+- name: Assert root folder idempotency
+  ansible.builtin.assert:
     that:
       - result.changed == false
 # ----------------------------------------------------------------------------
-- name: delete root folder
+- name: Delete root folder
   devopsarr.lidarr.lidarr_root_folder:
-    path: '/tmp'
-    new_item_monitor_option: 'all'
-    monitor_option: 'all'
+    path: /tmp
+    new_item_monitor_option: all
+    monitor_option: all
     metadata_profile_id: 1
     quality_profile_id: 1
-    name: 'Test'
-    state: 'absent'
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    name: Test
+    state: absent
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
-- name: assert root folder deletion
-  assert:
+- name: Assert root folder deletion
+  ansible.builtin.assert:
     that:
       - result['id'] == 0

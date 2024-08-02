@@ -1,63 +1,63 @@
 ---
-- name: create metadata
+- name: Create metadata
   devopsarr.lidarr.lidarr_metadata:
-    name: 'Example'
-    config_contract: 'WdtvMetadataSettings'
-    implementation: 'WdtvMetadata'
+    name: Example
+    config_contract: WdtvMetadataSettings
+    implementation: WdtvMetadata
     enable: true
     fields:
-      - name: 'trackMetadata'
+      - name: trackMetadata
         value: true
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
-- name: assert metadata creation
-  assert:
+- name: Assert metadata creation
+  ansible.builtin.assert:
     that:
       - result['implementation'] == 'WdtvMetadata'
 # ----------------------------------------------------------------------------
-- name: edit already present metadata
+- name: Edit already present metadata
   devopsarr.lidarr.lidarr_metadata:
-    name: 'Example'
-    config_contract: 'WdtvMetadataSettings'
-    implementation: 'WdtvMetadata'
+    name: Example
+    config_contract: WdtvMetadataSettings
+    implementation: WdtvMetadata
     enable: true
     fields:
-      - name: 'trackMetadata'
+      - name: trackMetadata
         value: false
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
-- name: assert metadata changes
-  assert:
+- name: Assert metadata changes
+  ansible.builtin.assert:
     that:
       - result.changed == true
 # ----------------------------------------------------------------------------
-- name: test idempotency
+- name: Test idempotency
   devopsarr.lidarr.lidarr_metadata:
-    name: 'Example'
-    config_contract: 'WdtvMetadataSettings'
-    implementation: 'WdtvMetadata'
+    name: Example
+    config_contract: WdtvMetadataSettings
+    implementation: WdtvMetadata
     enable: true
     fields:
-      - name: 'trackMetadata'
+      - name: trackMetadata
         value: false
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
-- name: assert metadata idempotency
-  assert:
+- name: Assert metadata idempotency
+  ansible.builtin.assert:
     that:
       - result.changed == false
 # ----------------------------------------------------------------------------
-- name: delete metadata
+- name: Delete metadata
   devopsarr.lidarr.lidarr_metadata:
-    name: 'Example'
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
-    state: 'absent'
+    name: Example
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
+    state: absent
   register: result
-- name: assert metadata deletion
-  assert:
+- name: Assert metadata deletion
+  ansible.builtin.assert:
     that:
       - result['id'] == 0

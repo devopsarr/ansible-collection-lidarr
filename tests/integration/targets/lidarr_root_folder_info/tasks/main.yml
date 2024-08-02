@@ -1,52 +1,52 @@
 ---
-- name: create root folder
+- name: Create root folder
   devopsarr.lidarr.lidarr_root_folder:
-    path: '{{ item }}'
-    new_item_monitor_option: 'all'
-    monitor_option: 'all'
+    path: "{{ item }}"
+    new_item_monitor_option: all
+    monitor_option: all
     metadata_profile_id: 1
     quality_profile_id: 1
-    name: 'Abc'
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    name: Abc
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   with_items:
-    - '/tmp'
-    - '/config'
+    - /tmp
+    - /config
 
-- name: list a single root folder
+- name: List a single root folder
   devopsarr.lidarr.lidarr_root_folder_info:
-    path: '/tmp'
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    path: /tmp
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
 
-- name: assert single root folder
-  assert:
+- name: Assert single root folder
+  ansible.builtin.assert:
     that:
       - result['root_folders'][0]['path'] == '/tmp'
 # ----------------------------------------------------------------------------
-- name: list all root folders
+- name: List all root folders
   devopsarr.lidarr.lidarr_root_folder_info:
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
 
-- name: assert multiple root folders
-  assert:
+- name: Assert multiple root folders
+  ansible.builtin.assert:
     that:
       - result['root_folders'] | length > 1
 # ----------------------------------------------------------------------------
-- name: clean up root folder
+- name: Clean up root folder
   devopsarr.lidarr.lidarr_root_folder:
-    path: '/tmp'
-    new_item_monitor_option: 'all'
-    monitor_option: 'all'
+    path: /tmp
+    new_item_monitor_option: all
+    monitor_option: all
     metadata_profile_id: 1
     quality_profile_id: 1
-    name: 'Abc'
+    name: Abc
     state: absent
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   with_items:
-    - '/tmp'
-    - '/config'
+    - /tmp
+    - /config

@@ -1,23 +1,23 @@
 ---
-- name: list a single import list schema
+- name: List a single import list schema
   devopsarr.lidarr.lidarr_import_list_schema_info:
-    name: 'SpotifyPlaylist'
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    name: SpotifyPlaylist
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
 
-- name: assert single import list schema
-  assert:
+- name: Assert single import list schema
+  ansible.builtin.assert:
     that:
       - result['import_lists'][0]['implementation'] == 'SpotifyPlaylist'
 # ----------------------------------------------------------------------------
-- name: list all import list schemas
+- name: List all import list schemas
   devopsarr.lidarr.lidarr_import_list_schema_info:
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
 
-- name: assert multiple import list schemas
-  assert:
+- name: Assert multiple import list schemas
+  ansible.builtin.assert:
     that:
       - result['import_lists'] | length > 1

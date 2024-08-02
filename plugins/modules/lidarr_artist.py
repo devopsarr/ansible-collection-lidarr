@@ -160,7 +160,7 @@ def create_artist(want, result):
         try:
             response = client.create_artist(artist_resource=want)
         except lidarr.ApiException as e:
-            module.fail_json('Error creating artist: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+            module.fail_json('Error creating artist: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
         except Exception as e:
             module.fail_json('Error creating artist: {}'.format(to_native(e)), **result)
         result.update(response.model_dump(by_alias=False))
@@ -171,7 +171,7 @@ def list_artist(result):
     try:
         return client.list_artist()
     except lidarr.ApiException as e:
-        module.fail_json('Error listing artist: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+        module.fail_json('Error listing artist: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
     except Exception as e:
         module.fail_json('Error listing artist: {}'.format(to_native(e)), **result)
 
@@ -190,7 +190,7 @@ def update_artist(want, result):
         try:
             response = client.update_artist(artist_resource=want, id=str(want.id))
         except lidarr.ApiException as e:
-            module.fail_json('Error updating artist: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+            module.fail_json('Error updating artist: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
         except Exception as e:
             module.fail_json('Error updating artist: {}'.format(to_native(e)), **result)
     # No need to exit module since it will exit by default either way
@@ -204,7 +204,7 @@ def delete_artist(result):
             try:
                 client.delete_artist(result['id'])
             except lidarr.ApiException as e:
-                module.fail_json('Error deleting artist: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+                module.fail_json('Error deleting artist: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
             except Exception as e:
                 module.fail_json('Error deleting artist: {}'.format(to_native(e)), **result)
             result['id'] = 0

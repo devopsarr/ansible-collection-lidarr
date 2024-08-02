@@ -108,7 +108,7 @@ def create_remote_path_mapping(want, result):
         try:
             response = client.create_remote_path_mapping(remote_path_mapping_resource=want)
         except lidarr.ApiException as e:
-            module.fail_json('Error creating remote path mapping: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+            module.fail_json('Error creating remote path mapping: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
         except Exception as e:
             module.fail_json('Error creating remote path mapping: {}'.format(to_native(e)), **result)
         result.update(response.model_dump(by_alias=False))
@@ -119,7 +119,7 @@ def list_remote_path_mappings(result):
     try:
         return client.list_remote_path_mapping()
     except lidarr.ApiException as e:
-        module.fail_json('Error listing remote path mappings: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+        module.fail_json('Error listing remote path mappings: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
     except Exception as e:
         module.fail_json('Error listing remote path mappings: {}'.format(to_native(e)), **result)
 
@@ -140,7 +140,7 @@ def update_remote_path_mapping(want, result):
         try:
             response = client.update_remote_path_mapping(remote_path_mapping_resource=want, id=str(want.id))
         except lidarr.ApiException as e:
-            module.fail_json('Error updating remote path mapping: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+            module.fail_json('Error updating remote path mapping: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
         except Exception as e:
             module.fail_json('Error updating remote path mapping: {}'.format(to_native(e)), **result)
     # No need to exit module since it will exit by default either way
@@ -154,7 +154,7 @@ def delete_remote_path_mapping(result):
             try:
                 client.delete_remote_path_mapping(result['id'])
             except lidarr.ApiException as e:
-                module.fail_json('Error deleting remote path mapping: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+                module.fail_json('Error deleting remote path mapping: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
             except Exception as e:
                 module.fail_json('Error deleting remote path mapping: {}'.format(to_native(e)), **result)
             result['id'] = 0

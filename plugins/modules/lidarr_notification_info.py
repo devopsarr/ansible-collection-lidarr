@@ -161,7 +161,7 @@ def list_notifications(result):
     try:
         return client.list_notification()
     except lidarr.ApiException as e:
-        module.fail_json('Error listing notifications: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+        module.fail_json('Error listing notifications: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
     except Exception as e:
         module.fail_json('Error listing notifications: {}'.format(to_native(e)), **result)
 

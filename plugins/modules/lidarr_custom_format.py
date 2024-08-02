@@ -172,7 +172,7 @@ def create_custom_format(want, result):
         try:
             response = client.create_custom_format(custom_format_resource=want)
         except lidarr.ApiException as e:
-            module.fail_json('Error creating custom format: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+            module.fail_json('Error creating custom format: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
         except Exception as e:
             module.fail_json('Error creating custom format: {}'.format(to_native(e)), **result)
         result.update(response.model_dump(by_alias=False))
@@ -183,7 +183,7 @@ def list_custom_formats(result):
     try:
         return client.list_custom_format()
     except lidarr.ApiException as e:
-        module.fail_json('Error listing custom formats: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+        module.fail_json('Error listing custom formats: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
     except Exception as e:
         module.fail_json('Error listing custom formats: {}'.format(to_native(e)), **result)
 
@@ -202,7 +202,7 @@ def update_custom_format(want, result):
         try:
             response = client.update_custom_format(custom_format_resource=want, id=str(want.id))
         except lidarr.ApiException as e:
-            module.fail_json('Error updating custom format: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+            module.fail_json('Error updating custom format: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
         except Exception as e:
             module.fail_json('Error updating custom format: {}'.format(to_native(e)), **result)
     # No need to exit module since it will exit by default either way
@@ -216,7 +216,7 @@ def delete_custom_format(result):
             try:
                 client.delete_custom_format(result['id'])
             except lidarr.ApiException as e:
-                module.fail_json('Error deleting custom format: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+                module.fail_json('Error deleting custom format: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
             except Exception as e:
                 module.fail_json('Error deleting custom format: {}'.format(to_native(e)), **result)
             result['id'] = 0

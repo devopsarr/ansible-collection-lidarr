@@ -1,64 +1,64 @@
 ---
-- name: create import list
+- name: Create import list
   devopsarr.lidarr.lidarr_import_list:
-    name: '{{ item }}'
+    name: "{{ item }}"
     enable_automatic_add: false
     should_monitor_existing: true
-    should_monitor: 'entireArtist'
+    should_monitor: entireArtist
     quality_profile_id: 1
     metadata_profile_id: 1
     list_order: 0
-    monitor_new_items: 'none'
-    root_folder_path: '/tmp'
+    monitor_new_items: none
+    root_folder_path: /tmp
     should_search: false
     fields:
-      - name: 'apiKey'
-        value: 'Key'
-      - name: 'baseUrl'
-        value: 'localhost'
-      - name: 'profileIds'
+      - name: apiKey
+        value: Key
+      - name: baseUrl
+        value: localhost
+      - name: profileIds
         value: [1]
-      - name: 'rootFolderPaths'
-        value: ['/tmp']
-    list_type: 'program'
-    config_contract: 'LidarrSettings'
-    implementation: 'LidarrImport'
+      - name: rootFolderPaths
+        value: [/tmp]
+    list_type: program
+    config_contract: LidarrSettings
+    implementation: LidarrImport
     tags: []
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   with_items:
-    - 'info_test'
-    - 'info_test1'
+    - info_test
+    - info_test1
 
-- name: list a single import list
+- name: List a single import list
   devopsarr.lidarr.lidarr_import_list_info:
-    name: 'info_test'
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    name: info_test
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
 
-- name: assert single import list
-  assert:
+- name: Assert single import list
+  ansible.builtin.assert:
     that:
       - result['import_lists'][0]['name'] == 'info_test'
 # ----------------------------------------------------------------------------
-- name: list all import lists
+- name: List all import lists
   devopsarr.lidarr.lidarr_import_list_info:
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
 
-- name: assert multiple import lists
-  assert:
+- name: Assert multiple import lists
+  ansible.builtin.assert:
     that:
       - result['import_lists'] | length > 1
 # ----------------------------------------------------------------------------
-- name: clean up import list
+- name: Clean up import list
   devopsarr.lidarr.lidarr_import_list:
-    name: '{{ item }}'
+    name: "{{ item }}"
     state: absent
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   with_items:
-    - 'info_test'
-    - 'info_test1'
+    - info_test
+    - info_test1

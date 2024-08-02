@@ -83,7 +83,7 @@ def get_naming_config(result):
     try:
         return client.get_naming_config()
     except lidarr.ApiException as e:
-        module.fail_json('Error getting naming: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+        module.fail_json('Error getting naming: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
     except Exception as e:
         module.fail_json('Error getting naming: {}'.format(to_native(e)), **result)
 

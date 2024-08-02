@@ -1,56 +1,56 @@
 ---
-- name: create indexer
+- name: Create indexer
   devopsarr.lidarr.lidarr_indexer:
-    name: '{{ item }}'
+    name: "{{ item }}"
     enable_automatic_search: false
     enable_interactive_search: false
     enable_rss: false
     priority: 10
-    config_contract: 'NewznabSettings'
-    implementation: 'Newznab'
-    protocol: 'usenet'
+    config_contract: NewznabSettings
+    implementation: Newznab
+    protocol: usenet
     fields:
-      - name: 'baseUrl'
-        value: 'https://lolo.sickbeard.com'
-      - name: 'apiPath'
-        value: '/api'
-      - name: 'categories'
+      - name: baseUrl
+        value: https://lolo.sickbeard.com
+      - name: apiPath
+        value: /api
+      - name: categories
         value: [8000, 5000]
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   with_items:
-    - 'info_test'
-    - 'info_test1'
+    - info_test
+    - info_test1
 
-- name: list a single indexer
+- name: List a single indexer
   devopsarr.lidarr.lidarr_indexer_info:
-    name: 'info_test'
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    name: info_test
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
 
-- name: assert single indexer
-  assert:
+- name: Assert single indexer
+  ansible.builtin.assert:
     that:
       - result['indexers'][0]['name'] == 'info_test'
 # ----------------------------------------------------------------------------
-- name: list all indexers
+- name: List all indexers
   devopsarr.lidarr.lidarr_indexer_info:
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
 
-- name: assert multiple indexers
-  assert:
+- name: Assert multiple indexers
+  ansible.builtin.assert:
     that:
       - result['indexers'] | length > 1
 # ----------------------------------------------------------------------------
-- name: clean up indexer
+- name: Clean up indexer
   devopsarr.lidarr.lidarr_indexer:
-    name: '{{ item }}'
+    name: "{{ item }}"
     state: absent
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   with_items:
-    - 'info_test'
-    - 'info_test1'
+    - info_test
+    - info_test1

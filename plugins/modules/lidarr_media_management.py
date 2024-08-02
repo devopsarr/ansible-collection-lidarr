@@ -295,7 +295,7 @@ def read_media_management(result):
     try:
         return client.get_media_management_config()
     except lidarr.ApiException as e:
-        module.fail_json('Error getting media management: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+        module.fail_json('Error getting media management: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
     except Exception as e:
         module.fail_json('Error getting media management: {}'.format(to_native(e)), **result)
 
@@ -307,7 +307,7 @@ def update_media_management(want, result):
         try:
             response = client.update_media_management_config(media_management_config_resource=want, id="1")
         except lidarr.ApiException as e:
-            module.fail_json('Error updating media management: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+            module.fail_json('Error updating media management: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
         except Exception as e:
             module.fail_json('Error updating media management: {}'.format(to_native(e)), **result)
     # No need to exit module since it will exit by default either way

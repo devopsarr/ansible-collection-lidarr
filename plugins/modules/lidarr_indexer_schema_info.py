@@ -131,7 +131,7 @@ def list_indexer_schema(result):
     try:
         return client.list_indexer_schema()
     except lidarr.ApiException as e:
-        module.fail_json('Error listing indexer schemas: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+        module.fail_json('Error listing indexer schemas: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
     except Exception as e:
         module.fail_json('Error listing indexer schemas: {}'.format(to_native(e)), **result)
 

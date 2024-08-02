@@ -178,7 +178,7 @@ def create_delay_profile(want, result):
         try:
             response = client.create_delay_profile(delay_profile_resource=want)
         except lidarr.ApiException as e:
-            module.fail_json('Error creating delay profile: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+            module.fail_json('Error creating delay profile: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
         except Exception as e:
             module.fail_json('Error creating delay profile: {}'.format(to_native(e)), **result)
         result.update(response.model_dump(by_alias=False))
@@ -189,7 +189,7 @@ def list_delay_profiles(result):
     try:
         return client.list_delay_profile()
     except lidarr.ApiException as e:
-        module.fail_json('Error listing delay profiles: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+        module.fail_json('Error listing delay profiles: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
     except Exception as e:
         module.fail_json('Error listing delay profiles: {}'.format(to_native(e)), **result)
 
@@ -208,7 +208,7 @@ def update_delay_profile(want, result):
         try:
             response = client.update_delay_profile(delay_profile_resource=want, id=str(want.id))
         except lidarr.ApiException as e:
-            module.fail_json('Error updating delay profile: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+            module.fail_json('Error updating delay profile: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
         except Exception as e:
             module.fail_json('Error updating delay profile: {}'.format(to_native(e)), **result)
     # No need to exit module since it will exit by default either way
@@ -222,7 +222,7 @@ def delete_delay_profile(result):
             try:
                 client.delete_delay_profile(result['id'])
             except lidarr.ApiException as e:
-                module.fail_json('Error deleting delay profile: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+                module.fail_json('Error deleting delay profile: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
             except Exception as e:
                 module.fail_json('Error deleting delay profile: {}'.format(to_native(e)), **result)
             result['id'] = 0

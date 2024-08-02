@@ -129,7 +129,7 @@ def create_release_profile(want, result):
         try:
             response = client.create_release_profile(release_profile_resource=want)
         except lidarr.ApiException as e:
-            module.fail_json('Error creating release profile: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+            module.fail_json('Error creating release profile: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
         except Exception as e:
             module.fail_json('Error creating release profile: {}'.format(to_native(e)), **result)
         result.update(response.model_dump(by_alias=False))
@@ -140,7 +140,7 @@ def list_release_profiles(result):
     try:
         return client.list_release_profile()
     except lidarr.ApiException as e:
-        module.fail_json('Error listing release profiles: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+        module.fail_json('Error listing release profiles: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
     except Exception as e:
         module.fail_json('Error listing release profiles: {}'.format(to_native(e)), **result)
 
@@ -163,7 +163,7 @@ def delete_release_profile(result):
             try:
                 client.delete_release_profile(result['id'])
             except lidarr.ApiException as e:
-                module.fail_json('Error deleting release profile: {}\n body {}'.format(to_native(e.reason), to_native(e.body)), **result)
+                module.fail_json('Error deleting release profile: {}\n body: {}'.format(to_native(e.reason), to_native(e.body)), **result)
             except Exception as e:
                 module.fail_json('Error deleting release profile: {}'.format(to_native(e)), **result)
             result['id'] = 0
