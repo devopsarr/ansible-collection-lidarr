@@ -1,47 +1,47 @@
 ---
-- name: create notification
+- name: Create notification
   devopsarr.lidarr.lidarr_notification:
-    name: '{{ item }}'
-    config_contract: 'CustomScriptSettings'
-    implementation: 'CustomScript'
+    name: "{{ item }}"
+    config_contract: CustomScriptSettings
+    implementation: CustomScript
     fields:
-      - name: 'path'
-        value: '/scripts/test.sh'
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+      - name: path
+        value: /scripts/test.sh
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   with_items:
-    - 'info_test'
-    - 'info_test1'
+    - info_test
+    - info_test1
 
-- name: list a single notification
+- name: List a single notification
   devopsarr.lidarr.lidarr_notification_info:
-    name: 'info_test'
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    name: info_test
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
 
-- name: assert single notification
-  assert:
+- name: Assert single notification
+  ansible.builtin.assert:
     that:
       - result['notifications'][0]['name'] == 'info_test'
 # ----------------------------------------------------------------------------
-- name: list all notifications
+- name: List all notifications
   devopsarr.lidarr.lidarr_notification_info:
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
 
-- name: assert multiple notifications
-  assert:
+- name: Assert multiple notifications
+  ansible.builtin.assert:
     that:
       - result['notifications'] | length > 1
 # ----------------------------------------------------------------------------
-- name: clean up notification
+- name: Clean up notification
   devopsarr.lidarr.lidarr_notification:
-    name: '{{ item }}'
+    name: "{{ item }}"
     state: absent
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   with_items:
-    - 'info_test'
-    - 'info_test1'
+    - info_test
+    - info_test1

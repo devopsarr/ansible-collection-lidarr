@@ -1,23 +1,23 @@
 ---
-- name: list a single metadata schema
+- name: List a single metadata schema
   devopsarr.lidarr.lidarr_metadata_schema_info:
-    name: 'WdtvMetadata'
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    name: WdtvMetadata
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
 
-- name: assert single metadata
-  assert:
+- name: Assert single metadata
+  ansible.builtin.assert:
     that:
       - result['metadatas'][0]['implementation'] == 'WdtvMetadata'
 # ----------------------------------------------------------------------------
-- name: list all metadata schemas
+- name: List all metadata schemas
   devopsarr.lidarr.lidarr_metadata_schema_info:
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
 
-- name: assert multiple metadata schemas
-  assert:
+- name: Assert multiple metadata schemas
+  ansible.builtin.assert:
     that:
       - result['metadatas'] | length > 1

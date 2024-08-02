@@ -1,136 +1,136 @@
 ---
-- name: create custom format
+- name: Create custom format
   devopsarr.lidarr.lidarr_custom_format:
     include_custom_format_when_renaming: false
-    name: 'Size'
+    name: Size
     specifications:
-      - name: 'size'
-        implementation: 'SizeSpecification'
+      - name: size
+        implementation: SizeSpecification
         negate: false
         required: true
         fields:
-          - name: 'min'
+          - name: min
             value: 0
-          - name: 'max'
+          - name: max
             value: 10
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
-- name: assert custom format creation
-  assert:
+- name: Assert custom format creation
+  ansible.builtin.assert:
     that:
       - result['name'] == 'Size'
 # ----------------------------------------------------------------------------
-- name: edit already present custom format
+- name: Edit already present custom format
   devopsarr.lidarr.lidarr_custom_format:
     include_custom_format_when_renaming: false
-    name: 'Size'
+    name: Size
     specifications:
-      - name: 'size'
-        implementation: 'SizeSpecification'
+      - name: size
+        implementation: SizeSpecification
         negate: false
         required: true
         fields:
-          - name: 'min'
+          - name: min
             value: 5
-          - name: 'max'
+          - name: max
             value: 10
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
-- name: assert custom format changes
-  assert:
+- name: Assert custom format changes
+  ansible.builtin.assert:
     that:
       - result.changed == true
 # ----------------------------------------------------------------------------
-- name: edit already present custom format
+- name: Edit already present custom format
   devopsarr.lidarr.lidarr_custom_format:
     include_custom_format_when_renaming: false
-    name: 'Size'
+    name: Size
     specifications:
-      - name: 'size'
-        implementation: 'SizeSpecification'
+      - name: size
+        implementation: SizeSpecification
         negate: false
         required: true
         fields:
-          - name: 'min'
+          - name: min
             value: 0
-          - name: 'max'
+          - name: max
             value: 10
-      - name: 'title'
-        implementation: 'ReleaseTitleSpecification'
+      - name: title
+        implementation: ReleaseTitleSpecification
         negate: false
         required: true
         fields:
-          - name: 'value'
-            value: '\\b(SPARKS|Framestor)\\b'
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+          - name: value
+            value: \\b(SPARKS|Framestor)\\b
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
-- name: assert custom format changes
-  assert:
+- name: Assert custom format changes
+  ansible.builtin.assert:
     that:
       - result.changed == true
 # ----------------------------------------------------------------------------
-- name: test idempotency
+- name: Test idempotency
   devopsarr.lidarr.lidarr_custom_format:
     include_custom_format_when_renaming: false
-    name: 'Size'
+    name: Size
     specifications:
-      - name: 'size'
-        implementation: 'SizeSpecification'
+      - name: size
+        implementation: SizeSpecification
         negate: false
         required: true
         fields:
-          - name: 'min'
+          - name: min
             value: 0
-          - name: 'max'
+          - name: max
             value: 10
-      - name: 'title'
-        implementation: 'ReleaseTitleSpecification'
+      - name: title
+        implementation: ReleaseTitleSpecification
         negate: false
         required: true
         fields:
-          - name: 'value'
-            value: '\\b(SPARKS|Framestor)\\b'
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+          - name: value
+            value: \\b(SPARKS|Framestor)\\b
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
-- name: assert custom format idempotency
-  assert:
+- name: Assert custom format idempotency
+  ansible.builtin.assert:
     that:
       - result.changed == false
 # ----------------------------------------------------------------------------
-- name: test reduction
+- name: Test reduction
   devopsarr.lidarr.lidarr_custom_format:
     include_custom_format_when_renaming: false
-    name: 'Size'
+    name: Size
     specifications:
-      - name: 'size'
-        implementation: 'SizeSpecification'
+      - name: size
+        implementation: SizeSpecification
         negate: false
         required: true
         fields:
-          - name: 'min'
+          - name: min
             value: 0
-          - name: 'max'
+          - name: max
             value: 10
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
-- name: assert custom format idempotency
-  assert:
+- name: Assert custom format idempotency
+  ansible.builtin.assert:
     that:
       - result.changed == true
 # ----------------------------------------------------------------------------
-- name: delete custom format
+- name: Delete custom format
   devopsarr.lidarr.lidarr_custom_format:
-    name: 'Size'
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
-    state: 'absent'
+    name: Size
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
+    state: absent
   register: result
-- name: assert custom format deletion
-  assert:
+- name: Assert custom format deletion
+  ansible.builtin.assert:
     that:
       - result['id'] == 0

@@ -1,23 +1,23 @@
 ---
-- name: format a single custom format schema
+- name: Format a single custom format schema
   devopsarr.lidarr.lidarr_custom_format_schema_info:
-    name: 'SizeSpecification'
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    name: SizeSpecification
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
 
-- name: assert single custom format schema
-  assert:
+- name: Assert single custom format schema
+  ansible.builtin.assert:
     that:
       - result['custom_formats'][0]['implementation'] == 'SizeSpecification'
 # ----------------------------------------------------------------------------
-- name: format all custom format schemas
+- name: Format all custom format schemas
   devopsarr.lidarr.lidarr_custom_format_schema_info:
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
 
-- name: assert multiple custom format schemas
-  assert:
+- name: Assert multiple custom format schemas
+  ansible.builtin.assert:
     that:
       - result['custom_formats'] | length > 1

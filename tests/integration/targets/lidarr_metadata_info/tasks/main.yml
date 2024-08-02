@@ -1,48 +1,48 @@
 ---
-- name: create metadata
+- name: Create metadata
   devopsarr.lidarr.lidarr_metadata:
-    name: '{{ item }}'
-    config_contract: 'WdtvMetadataSettings'
-    implementation: 'WdtvMetadata'
+    name: "{{ item }}"
+    config_contract: WdtvMetadataSettings
+    implementation: WdtvMetadata
     enable: true
     fields:
-      - name: 'trackMetadata'
+      - name: trackMetadata
         value: true
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   with_items:
-    - 'info_test'
-    - 'info_test1'
+    - info_test
+    - info_test1
 
-- name: list a single metadata
+- name: List a single metadata
   devopsarr.lidarr.lidarr_metadata_info:
-    name: 'info_test'
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    name: info_test
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
 
-- name: assert single metadata
-  assert:
+- name: Assert single metadata
+  ansible.builtin.assert:
     that:
       - result['metadatas'][0]['name'] == 'info_test'
 # ----------------------------------------------------------------------------
-- name: list all metadatas
+- name: List all metadatas
   devopsarr.lidarr.lidarr_metadata_info:
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
 
-- name: assert multiple metadatas
-  assert:
+- name: Assert multiple metadatas
+  ansible.builtin.assert:
     that:
       - result['metadatas'] | length > 1
 # ----------------------------------------------------------------------------
-- name: clean up metadata
+- name: Clean up metadata
   devopsarr.lidarr.lidarr_metadata:
-    name: '{{ item }}'
+    name: "{{ item }}"
     state: absent
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   with_items:
-    - 'info_test'
-    - 'info_test1'
+    - info_test
+    - info_test1

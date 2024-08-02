@@ -1,63 +1,63 @@
 ---
-- name: create first artist
+- name: Create first artist
   devopsarr.lidarr.lidarr_artist:
-    artist_name: 'Queen'
-    foreign_artist_id: '0383dadf-2a4e-4d10-a46a-e9e041da8eb3'
+    artist_name: Queen
+    foreign_artist_id: 0383dadf-2a4e-4d10-a46a-e9e041da8eb3
     monitored: true
-    path: '/config/queen'
+    path: /config/queen
     quality_profile_id: 1
     metadata_profile_id: 1
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
 
-- name: create second artist
+- name: Create second artist
   devopsarr.lidarr.lidarr_artist:
-    artist_name: 'Ludwig van Beethoven'
-    foreign_artist_id: '1f9df192-a621-4f54-8850-2c5373b7eac9'
+    artist_name: Ludwig van Beethoven
+    foreign_artist_id: 1f9df192-a621-4f54-8850-2c5373b7eac9
     monitored: true
-    path: '/config/ludwig'
+    path: /config/ludwig
     quality_profile_id: 1
     metadata_profile_id: 1
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
 
-- name: list a single artist
+- name: List a single artist
   devopsarr.lidarr.lidarr_artist_info:
-    foreign_artist_id: '0383dadf-2a4e-4d10-a46a-e9e041da8eb3'
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    foreign_artist_id: 0383dadf-2a4e-4d10-a46a-e9e041da8eb3
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
 
-- name: assert single artist
-  assert:
+- name: Assert single artist
+  ansible.builtin.assert:
     that:
       - result['artist_list'][0]['artist_name'] == 'Queen'
 # ----------------------------------------------------------------------------
-- name: list all artist_list
+- name: List all artist_list
   devopsarr.lidarr.lidarr_artist_info:
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
 
-- name: assert multiple artist_list
-  assert:
+- name: Assert multiple artist_list
+  ansible.builtin.assert:
     that:
       - result['artist_list'] | length > 1
 # ----------------------------------------------------------------------------
-- name: clean up first artist
+- name: Clean up first artist
   devopsarr.lidarr.lidarr_artist:
-    artist_name: 'Queen'
-    foreign_artist_id: '0383dadf-2a4e-4d10-a46a-e9e041da8eb3'
-    path: '/config/queen'
+    artist_name: Queen
+    foreign_artist_id: 0383dadf-2a4e-4d10-a46a-e9e041da8eb3
+    path: /config/queen
     state: absent
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
 
-- name: clean up second artist
+- name: Clean up second artist
   devopsarr.lidarr.lidarr_artist:
-    artist_name: 'Ludwig van Beethoven'
-    foreign_artist_id: '1f9df192-a621-4f54-8850-2c5373b7eac9'
-    path: '/config/ludwig'
+    artist_name: Ludwig van Beethoven
+    foreign_artist_id: 1f9df192-a621-4f54-8850-2c5373b7eac9
+    path: /config/ludwig
     state: absent
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"

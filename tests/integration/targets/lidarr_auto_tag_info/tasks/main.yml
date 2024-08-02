@@ -1,66 +1,66 @@
 ---
-- name: create tag
+- name: Create tag
   devopsarr.lidarr.lidarr_tag:
-    label: 'autotaginfotest'
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    label: autotaginfotest
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: tag
 
-- name: create auto tag
+- name: Create auto tag
   devopsarr.lidarr.lidarr_auto_tag:
     remove_tags_automatically: false
-    name: '{{ item }}'
+    name: "{{ item }}"
     tags: ["{{ tag['id'] }}"]
     specifications:
-      - name: 'rock'
-        implementation: 'GenreSpecification'
+      - name: rock
+        implementation: GenreSpecification
         negate: true
         required: false
         fields:
-          - name: 'value'
-            value: ['rock', 'folk']
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+          - name: value
+            value: [rock, folk]
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   with_items:
-    - 'info_test'
-    - 'info_test1'
+    - info_test
+    - info_test1
 
-- name: list a single auto tag
+- name: List a single auto tag
   devopsarr.lidarr.lidarr_auto_tag_info:
-    name: 'info_test'
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    name: info_test
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
 
-- name: assert single auto tag
-  assert:
+- name: Assert single auto tag
+  ansible.builtin.assert:
     that:
       - result['auto_tags'][0]['name'] == 'info_test'
 # ----------------------------------------------------------------------------
-- name: list all auto tags
+- name: List all auto tags
   devopsarr.lidarr.lidarr_auto_tag_info:
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
-- name: assert multiple auto tags
-  assert:
+- name: Assert multiple auto tags
+  ansible.builtin.assert:
     that:
       - result['auto_tags'] | length > 1
 # ----------------------------------------------------------------------------
-- name: clean up auto tag
+- name: Clean up auto tag
   devopsarr.lidarr.lidarr_auto_tag:
-    name: '{{ item }}'
+    name: "{{ item }}"
     state: absent
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   with_items:
-    - 'info_test'
-    - 'info_test1'
+    - info_test
+    - info_test1
 
-- name: clean up tag
+- name: Clean up tag
   devopsarr.lidarr.lidarr_tag:
-    label: 'autotaginfotest'
-    state: 'absent'
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    label: autotaginfotest
+    state: absent
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result

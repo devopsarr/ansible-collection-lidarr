@@ -1,62 +1,62 @@
 ---
-- name: create artist
+- name: Create artist
   devopsarr.lidarr.lidarr_artist:
-    artist_name: 'Queen'
-    foreign_artist_id: '0383dadf-2a4e-4d10-a46a-e9e041da8eb3'
+    artist_name: Queen
+    foreign_artist_id: 0383dadf-2a4e-4d10-a46a-e9e041da8eb3
     monitored: true
-    path: '/config/queen'
+    path: /config/queen
     quality_profile_id: 1
     metadata_profile_id: 1
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
-- name: assert artist creation
-  assert:
+- name: Assert artist creation
+  ansible.builtin.assert:
     that:
       - result['foreign_artist_id'] == '0383dadf-2a4e-4d10-a46a-e9e041da8eb3'
 # ----------------------------------------------------------------------------
-- name: edit already present artist
+- name: Edit already present artist
   devopsarr.lidarr.lidarr_artist:
-    artist_name: 'Queen'
-    foreign_artist_id: '0383dadf-2a4e-4d10-a46a-e9e041da8eb3'
+    artist_name: Queen
+    foreign_artist_id: 0383dadf-2a4e-4d10-a46a-e9e041da8eb3
     monitored: true
-    path: '/config/Queen'
+    path: /config/Queen
     quality_profile_id: 1
     metadata_profile_id: 1
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
-- name: assert artist changes
-  assert:
+- name: Assert artist changes
+  ansible.builtin.assert:
     that:
       - result.changed == true
 # ----------------------------------------------------------------------------
-- name: test idempotency
+- name: Test idempotency
   devopsarr.lidarr.lidarr_artist:
-    artist_name: 'Queen'
-    foreign_artist_id: '0383dadf-2a4e-4d10-a46a-e9e041da8eb3'
+    artist_name: Queen
+    foreign_artist_id: 0383dadf-2a4e-4d10-a46a-e9e041da8eb3
     monitored: true
-    path: '/config/Queen'
+    path: /config/Queen
     quality_profile_id: 1
     metadata_profile_id: 1
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
-- name: assert artist idempotency
-  assert:
+- name: Assert artist idempotency
+  ansible.builtin.assert:
     that:
       - result.changed == false
 # ----------------------------------------------------------------------------
-- name: delete artist
+- name: Delete artist
   devopsarr.lidarr.lidarr_artist:
-    artist_name: 'Queen'
-    foreign_artist_id: '0383dadf-2a4e-4d10-a46a-e9e041da8eb3'
-    path: '/config/queen'
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
-    state: 'absent'
+    artist_name: Queen
+    foreign_artist_id: 0383dadf-2a4e-4d10-a46a-e9e041da8eb3
+    path: /config/queen
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
+    state: absent
   register: result
-- name: assert artist deletion
-  assert:
+- name: Assert artist deletion
+  ansible.builtin.assert:
     that:
       - result['id'] == 0

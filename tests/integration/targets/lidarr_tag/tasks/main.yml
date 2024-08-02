@@ -1,34 +1,34 @@
 ---
-- name: create tag
+- name: Create tag
   devopsarr.lidarr.lidarr_tag:
-    label: 'hello'
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    label: hello
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
-- name: assert tag creation
-  assert:
+- name: Assert tag creation
+  ansible.builtin.assert:
     that:
       - result['label'] == 'hello'
 # ----------------------------------------------------------------------------
-- name: create already present tag
+- name: Create already present tag
   devopsarr.lidarr.lidarr_tag:
-    label: 'hello'
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    label: hello
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
-- name: assert tag idempotency
-  assert:
+- name: Assert tag idempotency
+  ansible.builtin.assert:
     that:
       - result.changed == false
 # ----------------------------------------------------------------------------
-- name: delete tag
+- name: Delete tag
   devopsarr.lidarr.lidarr_tag:
-    label: 'hello'
-    state: 'absent'
-    lidarr_api_key: '{{ lidarr_api_key }}'
-    lidarr_url: '{{ lidarr_url }}'
+    label: hello
+    state: absent
+    lidarr_api_key: "{{ lidarr_api_key }}"
+    lidarr_url: "{{ lidarr_url }}"
   register: result
-- name: assert tag deletion
-  assert:
+- name: Assert tag deletion
+  ansible.builtin.assert:
     that:
       - result['id'] == 0
