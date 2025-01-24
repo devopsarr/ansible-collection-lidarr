@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/devopsarr/ansible-collection-lidarr/compare/v1.0.0...v1.0.1) (2025-01-24)
+
+
+### Bug Fixes
+
+* id from str to int ([99269c1](https://github.com/devopsarr/ansible-collection-lidarr/commit/99269c13800cce58d7494c270872d4b7afbbf2d9))
+
 ## [1.0.0](https://github.com/devopsarr/ansible-collection-lidarr/compare/v0.1.0...v1.0.0) (2024-02-26)
 
 

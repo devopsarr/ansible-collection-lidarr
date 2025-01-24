@@ -141,3 +141,5 @@ releases:
       name: lidarr_tag_info
       namespace: ''
     release_date: '2024-02-26'
+  1.0.1:
+    release_date: '2025-01-24'
